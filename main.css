@@ -1,5 +1,6 @@
 html, body {
 	margin: 0; border: 0; padding: 0;
+	width: 100%; height: 100%;
 	background-color: #fff;
 }
 
@@ -12,7 +13,7 @@ body {
 	-moz-box-pack: center;
 	box-align: center;
 	-webkit-box-align: center;
-	-moz-box-align: end;
+	-moz-box-align: center;
 }
 
 canvas {
