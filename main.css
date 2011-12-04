@@ -1,4 +1,21 @@
 html, body {
 	margin: 0; border: 0; padding: 0;
-	background-color: #000;
+	background-color: #fff;
+}
+
+body {
+	display: box;
+	display: -webkit-box;
+	display: -moz-box;
+	box-pack: center;
+	-webkit-box-pack: center;
+	-moz-box-pack: center;
+	box-align: center;
+	-webkit-box-align: center;
+	-moz-box-align: end;
+}
+
+canvas {
+	border-radius: 5px;
+	box-shadow: 0 0 5px #444;
 }
