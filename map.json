@@ -1,6 +1,7 @@
 {
 	"width": 5,
 	"height": 3,
+	"depth": 3,
 	"entities": [
 		{
 			"uri": "GrassBlock",
@@ -13,7 +14,7 @@
 			"y": 1,
 			"z": 0
 		}, {
-			"uri": "WoodBlock",
+			"uri": "WaterBlock",
 			"x": 1,
 			"y": 0,
 			"z": 0
@@ -58,7 +59,7 @@
 			"y": 0,
 			"z": 0
 		}, {
-			"uri": "WaterBlock",
+			"uri": "WoodBlock",
 			"x": 3,
 			"y": 1,
 			"z": 0
@@ -72,6 +73,11 @@
 			"x": 4,
 			"y": 0,
 			"z": 0
+		}, {
+			"uri": "CharacterHornGirl",
+			"x": 3,
+			"y": 1,
+			"z": 1
 		}, {
 			"uri": "StoneBlock",
 			"x": 4,
@@ -87,6 +93,16 @@
 			"x": 4,
 			"y": 2,
 			"z": 1
+		}, {
+			"uri": "StoneBlock",
+			"x": 4,
+			"y": 0,
+			"z": 1
+		}, {
+			"uri": "StoneBlock",
+			"x": 4,
+			"y": 0,
+			"z": 2
 		}
 	]
 }

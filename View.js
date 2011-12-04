@@ -1,31 +1,59 @@
 (function () {
 	
-	newgame.View = function (config) {
+	var View = newgame.View = function (config) {
 
-		this.core = config.core;
+			this.core = config.core;
+
+			this.createCanvas();
+
+			this.entityViews = {};
+			this.core.entitiesList.forEach(function (entity) {
+				this.entityViews[entity.id] = new newgame.EntityView(this, entity);
+			}, this);
+
+			this.renderingPath = [];
+			this.updateRenderingPath(true);
+
+		};
+
+	View.prototype.createCanvas = function () {
 
 		var canvas = document.createElement("canvas");
 
-		canvas.width = this.core.map.width * newgame.TILE_WIDTH;
-		canvas.height = this.core.map.height * (newgame.TILE_HEIGHT - newgame.TILE_THICKNESS - newgame.TILE_OFFSET) + newgame.TILE_THICKNESS;
+		canvas.width = this.core.mapData.width * newgame.TILE_WIDTH;
+		canvas.height = newgame.TILE_HEIGHT + (this.core.mapData.height - 1) * (newgame.TILE_HEIGHT - newgame.TILE_THICKNESS - newgame.TILE_OFFSET) + (this.core.mapData.height - 1) * newgame.TILE_THICKNESS;
 
 		document.body.appendChild(canvas);
 
-		var ctx = canvas.getContext("2d");
+		this.canvas = canvas;
+		this.ctx = canvas.getContext("2d");
 
-		this.core.map.entities.forEach(function (entityConfig) {
+	};
 
-			var entity = this.core.entityTypes[entityConfig.uri];
+	View.prototype.updateRenderingPath = function (flush) {
 
-			ctx.drawImage(
-					entity.image,
-					entityConfig.x * newgame.TILE_WIDTH,
-					entityConfig.y * (newgame.TILE_HEIGHT - newgame.TILE_THICKNESS - newgame.TILE_OFFSET) - entityConfig.z * newgame.TILE_THICKNESS - newgame.TILE_OFFSET);
+		if (flush) {
+			this.renderingPath = this.core.entitiesList.map(function (entity) {
+				return this.entityViews[entity.id];
+			}, this);
+		}
 
-		}, this);
+		this.renderingPath.sort(function (entityViewA, entityViewB) {
+			if (entityViewA.entity.y < entityViewB.entity.y) {
+				return -1;
+			} else if (entityViewA.entity.y > entityViewB.entity.y) {
+				return 1;
+			} else {
+				return entityViewA.entity.z - entityViewB.entity.z;
+			}
+		});
 
-		console.log("view initialized", config);
+	};
 
+	View.prototype.draw = function () {
+		this.renderingPath.forEach(function (entityView) {
+			entityView.draw();
+		})
 	};
 
 })();

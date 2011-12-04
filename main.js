@@ -61,6 +61,8 @@ window.addEventListener("load", function () {
 				core: core
 			});
 
+		view.draw();
+
 	});
 
 }, false);
