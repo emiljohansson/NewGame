@@ -1,74 +1,167 @@
 {
-	"grass-0": {
-		"x": 0,
-		"y": 0
-	},
-	"grass-1": {
-		"x": 1,
-		"y": 0
-	},
-	"grass-2": {
-		"x": 2,
-		"y": 0
-	},
-	"grass-3": {
-		"x": 3,
-		"y": 0
-	},
-	"grass-4": {
-		"x": 4,
-		"y": 0
-	},
-	"grass-5": {
-		"x": 5,
-		"y": 0
-	},
-	"grass-6": {
-		"x": 6,
-		"y": 0
-	},
-	"grass-7": {
-		"x": 0,
-		"y": 1
-	},
-	"grass-8": {
-		"x": 1,
-		"y": 1
-	},
-	"grass-9": {
-		"x": 2,
-		"y": 1
-	},
-	"grass-10": {
-		"x": 3,
-		"y": 1
-	},
-	"grass-11": {
-		"x": 4,
-		"y": 1
-	},
-	"grass-12": {
-		"x": 5,
-		"y": 1
-	},
-	"grass-13": {
-		"x": 6,
-		"y": 1
-	},
-	"grass-14": {
-		"x": 7,
-		"y": 1
-	},
-	"grass-15": {
-		"x": 0,
-		"y": 2
-	},
-	"grass-16": {
-		"x": 1,
-		"y": 2
-	},
-	"grass-17": {
-		"x": 2,
-		"y": 2
-	}
+    "BrownBlock": {
+        "url": "gfx/Brown Block.png"
+    },
+    "CharacterBoy": {
+        "url": "gfx/Character Boy.png"
+    },
+    "CharacterCatGirl": {
+        "url": "gfx/Character Cat Girl.png"
+    },
+    "CharacterHornGirl": {
+        "url": "gfx/Character Horn Girl.png"
+    },
+    "CharacterPinkGirl": {
+        "url": "gfx/Character Pink Girl.png"
+    },
+    "CharacterPrincessGirl": {
+        "url": "gfx/Character Princess Girl.png"
+    },
+    "ChestClosed": {
+        "url": "gfx/Chest Closed.png"
+    },
+    "ChestLid": {
+        "url": "gfx/Chest Lid.png"
+    },
+    "ChestOpen": {
+        "url": "gfx/Chest Open.png"
+    },
+    "DirtBlock": {
+        "url": "gfx/Dirt Block.png"
+    },
+    "DoorTallClosed": {
+        "url": "gfx/Door Tall Closed.png"
+    },
+    "DoorTallOpen": {
+        "url": "gfx/Door Tall Open.png"
+    },
+    "EnemyBug": {
+        "url": "gfx/Enemy Bug.png"
+    },
+    "GemBlue": {
+        "url": "gfx/Gem Blue.png"
+    },
+    "GemGreen": {
+        "url": "gfx/Gem Green.png"
+    },
+    "GemOrange": {
+        "url": "gfx/Gem Orange.png"
+    },
+    "GrassBlock": {
+        "url": "gfx/Grass Block.png"
+    },
+    "Heart": {
+        "url": "gfx/Heart.png"
+    },
+    "Key": {
+        "url": "gfx/Key.png"
+    },
+    "PlainBlock": {
+        "url": "gfx/Plain Block.png"
+    },
+    "RampEast": {
+        "url": "gfx/Ramp East.png"
+    },
+    "RampNorth": {
+        "url": "gfx/Ramp North.png"
+    },
+    "RampSouth": {
+        "url": "gfx/Ramp South.png"
+    },
+    "RampWest": {
+        "url": "gfx/Ramp West.png"
+    },
+    "Rock": {
+        "url": "gfx/Rock.png"
+    },
+    "RoofEast": {
+        "url": "gfx/Roof East.png"
+    },
+    "RoofNorthEast": {
+        "url": "gfx/Roof North East.png"
+    },
+    "RoofNorthWest": {
+        "url": "gfx/Roof North West.png"
+    },
+    "RoofNorth": {
+        "url": "gfx/Roof North.png"
+    },
+    "RoofSouthEast": {
+        "url": "gfx/Roof South East.png"
+    },
+    "RoofSouthWest": {
+        "url": "gfx/Roof South West.png"
+    },
+    "RoofSouth": {
+        "url": "gfx/Roof South.png"
+    },
+    "RoofWest": {
+        "url": "gfx/Roof West.png"
+    },
+    "Selector": {
+        "url": "gfx/Selector.png"
+    },
+    "ShadowEast": {
+        "url": "gfx/Shadow East.png"
+    },
+    "ShadowNorthEast": {
+        "url": "gfx/Shadow North East.png"
+    },
+    "ShadowNorthWest": {
+        "url": "gfx/Shadow North West.png"
+    },
+    "ShadowNorth": {
+        "url": "gfx/Shadow North.png"
+    },
+    "ShadowSideWest": {
+        "url": "gfx/Shadow Side West.png"
+    },
+    "ShadowSouthEast": {
+        "url": "gfx/Shadow South East.png"
+    },
+    "ShadowSouthWest": {
+        "url": "gfx/Shadow South West.png"
+    },
+    "ShadowSouth": {
+        "url": "gfx/Shadow South.png"
+    },
+    "ShadowWest": {
+        "url": "gfx/Shadow West.png"
+    },
+    "SpeechBubble": {
+        "url": "gfx/SpeechBubble.png"
+    },
+    "Star": {
+        "url": "gfx/Star.png"
+    },
+    "StoneBlockTall": {
+        "url": "gfx/Stone Block Tall.png"
+    },
+    "StoneBlock": {
+        "url": "gfx/Stone Block.png"
+    },
+    "TreeShort": {
+        "url": "gfx/Tree Short.png"
+    },
+    "TreeTall": {
+        "url": "gfx/Tree Tall.png"
+    },
+    "TreeUgly": {
+        "url": "gfx/Tree Ugly.png"
+    },
+    "WallBlockTall": {
+        "url": "gfx/Wall Block Tall.png"
+    },
+    "WallBlock": {
+        "url": "gfx/Wall Block.png"
+    },
+    "WaterBlock": {
+        "url": "gfx/Water Block.png"
+    },
+    "WindowTall": {
+        "url": "gfx/Window Tall.png"
+    },
+    "WoodBlock": {
+        "url": "gfx/Wood Block.png"
+    }
 }
