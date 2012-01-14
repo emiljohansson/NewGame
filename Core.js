@@ -8,12 +8,34 @@
 		this.entityTypes = config.entityTypes;
 		this.mapData = config.map;
 		this.entitiesList = [];
+		this.ladyBug = null;
+		this.enemies = [];
 
 		this.world = this.initPhysics();
 
 		this.mapData.entities.forEach(function (entityConfig) {
-			var entity = new newgame.Entity(this, entityConfig);
+
+			var entity;
+
+			switch (entityConfig.uri) {
+				case "EnemyBug":
+					entity = new newgame.CharacterEntity(this, entityConfig);
+					this.ladyBug = entity;
+					break;
+				case "CharacterBoy":
+				case "CharacterCatGirl":
+				case "CharacterHornGirl":
+				case "CharacterPinkGirl":
+				case "CharacterPrincessGirl":
+					entity = new newgame.CharacterEntity(this, entityConfig);
+					this.enemies.push(entity);
+					break;
+				default:
+					entity = new newgame.Entity(this, entityConfig);
+			}
+
 			this.entitiesList.push(entity);
+
 		}, this);
 
 	};

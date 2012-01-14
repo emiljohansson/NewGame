@@ -1,11 +1,13 @@
 (function () {
 
 	var Entity = newgame.Entity = function (core, config) {
-			this.core = core;
-			this.type = config.uri;
-			this.id = Math.random();
+			if (core && config) {
+				this.core = core;
+				this.type = config.uri;
+				this.id = Math.random();
 
-			this.body = this.initPhysics(config);
+				this.body = this.initPhysics(config);
+			}
 		};
 
 	Entity.prototype.initPhysics = function (config) {

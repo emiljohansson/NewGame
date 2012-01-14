@@ -8,7 +8,17 @@
 
 			this.entityViews = {};
 			this.core.entitiesList.forEach(function (entity) {
-				this.entityViews[entity.id] = new newgame.EntityView(this, entity);
+
+				var entityView;
+
+				if (entity instanceof newgame.CharacterEntity) {
+					entityView = new newgame.CharacterEntityView(this, entity);
+				} else {
+					entityView = new newgame.EntityView(this, entity);
+				}
+
+				this.entityViews[entity.id] = entityView;
+
 			}, this);
 
 			this.renderingPath = [];

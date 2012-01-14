@@ -1,9 +1,11 @@
 (function () {
 
 	var EntityView = newgame.EntityView = function (view, entity) {
-			this.view = view;
-			this.entity = entity;
-			this.update();
+			if (view && entity) {
+				this.view = view;
+				this.entity = entity;
+				this.update();
+			}
 		};
 
 	EntityView.prototype.update = function () {
