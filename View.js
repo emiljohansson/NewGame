@@ -30,6 +30,10 @@
 
 	};
 
+	View.prototype.clearCanvas = function () {
+		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+	};
+
 	View.prototype.updateRenderingPath = function (flush) {
 
 		if (flush) {
@@ -51,6 +55,7 @@
 	};
 
 	View.prototype.draw = function () {
+		this.clearCanvas();
 		this.renderingPath.forEach(function (entityView) {
 			entityView.draw();
 		})
