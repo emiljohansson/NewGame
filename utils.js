@@ -4,6 +4,12 @@
 
 	newgame.utils = utils;
 
+    utils.mixin = function (constructor, mixin) {
+        for (var property in mixin) {
+            constructor.prototype[property] = mixin[property];
+        }
+    };
+
     utils.Deferred = (function () {
 
         var Deferred = function () {
