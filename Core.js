@@ -22,7 +22,7 @@
 
 			switch (entityConfig.uri) {
 				case "EnemyBug":
-					entity = new newgame.CharacterEntity(this, entityConfig);
+					entity = new newgame.LadybugCharacterEntity(this, entityConfig);
 					this.ladyBug = entity;
 					break;
 				case "CharacterBoy":
