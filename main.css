@@ -19,4 +19,22 @@ body {
 canvas {
 	border-radius: 5px;
 	box-shadow: 0 0 5px #444;
+
+	background: -moz-linear-gradient(top, #a1dbff 0, #cbebff 40px, #f0f9ff 80px); /* FF3.6+ */
+	background: -webkit-linear-gradient(top, #a1dbff 0, #cbebff 40px, #f0f9ff 80px); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #a1dbff 0, #cbebff 40px, #f0f9ff 80px); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #a1dbff 0, #cbebff 40px, #f0f9ff 80px); /* IE10+ */
+	background: linear-gradient(top, #a1dbff 0, #cbebff 40px, #f0f9ff 80px); /* W3C */
+}
+
+div.hud {
+	height: 50px;
+	margin-left: -2px;
+	position: absolute;
+	top: 20px;
+	text-indent: 20px;
+
+	color: blue;
+	font-size: 24px;
+	font-family: sans-serif;
 }

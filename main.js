@@ -127,6 +127,10 @@ window.addEventListener("load", function () {
 		core.initPhysics();
 		view.play();
 
+		var hud = new newgame.HUD({
+				canvas: view.canvas
+			});
+
 	});
 
 }, false);

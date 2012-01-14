@@ -48,6 +48,7 @@
             setTimeout(function () {
                 that.body.remove();
                 that.fireEvent("die");
+                newgame.publish("die");
             }, Entity.DIE_TIMEOUT);
             this.isDying = Date.now();
             that.fireEvent("dying");
