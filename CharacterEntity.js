@@ -27,6 +27,13 @@
 
         this.core.world.add(body);
 
+        this.core.world.add(new vphy.FrictionAccelerator({
+            x: 0.99,
+            y: 0.99,
+            z: 1,
+            bodies: [body]
+        }));
+
         return body;
 
     };

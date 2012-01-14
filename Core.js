@@ -9,7 +9,7 @@
 		this.mapData = config.map;
 
 		this.entitiesList = [];
-		this.ladyBug = null;
+		this.ladybug = null;
 		this.enemies = [];
 
 		this.world = this.initPhysics();
@@ -23,7 +23,7 @@
 			switch (entityConfig.uri) {
 				case "EnemyBug":
 					entity = new newgame.LadybugCharacterEntity(this, entityConfig);
-					this.ladyBug = entity;
+					this.ladybug = entity;
 					break;
 				case "CharacterBoy":
 				case "CharacterCatGirl":
