@@ -5,6 +5,7 @@
             newgame.CharacterEntity.call(this, core, config);
 
             this.initUserInput();
+            this.initKillingMechanism();
 
         };
 
@@ -27,6 +28,27 @@
                     body.accelerate(0, 0, 1280);
                     that.core.inputs[newgame.InputTypes.JUMP] = false;
                 }
+            }
+        });
+
+    };
+
+    Entity.prototype.initKillingMechanism = function () {
+
+        var that = this;
+        var body = this.body;
+        
+        body.events.on("contact", function (eventType, contactedBody) {
+            if (contactedBody instanceof vphy.Sphere) {
+                that.core.enemies.forEach(function (entity) {
+                    if (entity.body === contactedBody) {
+                        if (body.z - contactedBody.z > 0.75) {
+                            entity.die();
+                        } else {
+                            // TODO: player gets hit
+                        }
+                    }
+                });
             }
         });
 

@@ -1,9 +1,9 @@
 (function () {
 
+    var DIE_TIMEOUT = 500;
+
     var Entity = newgame.CharacterEntity = function (core, config) {
-
             newgame.Entity.call(this, core, config);
-
         };
 
     Entity.prototype = new newgame.Entity;
@@ -36,6 +36,16 @@
 
         return body;
 
+    };
+
+    Entity.prototype.die = function () {
+        if (!this.isDying) {
+            var that = this;
+            setTimeout(function () {
+                that.body.remove();
+            }, DIE_TIMEOUT);
+            this.isDying = true;
+        }
     };
 
 })();
