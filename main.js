@@ -131,6 +131,8 @@ window.addEventListener("load", function () {
 				canvas: view.canvas
 			});
 
+		var goals = new newgame.Goals(core);
+
 	});
 
 }, false);
