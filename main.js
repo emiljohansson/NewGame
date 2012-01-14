@@ -133,6 +133,8 @@ window.addEventListener("load", function () {
 
 		var goals = new newgame.Goals(core);
 
+		var soundManager = new newgame.SoundManager();
+
 	});
 
 }, false);

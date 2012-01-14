@@ -52,6 +52,7 @@
             }, Entity.DIE_TIMEOUT);
             this.isDying = Date.now();
             that.fireEvent("dying");
+            newgame.publish("dying");
         }
     };
 
