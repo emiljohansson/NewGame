@@ -7,8 +7,9 @@
 		};
 
 	EntityView.prototype.update = function () {
-		this.x = this.entity.x * newgame.TILE_WIDTH,
-		this.y = this.entity.y * (newgame.TILE_HEIGHT - newgame.TILE_OFFSET - newgame.TILE_THICKNESS) - this.entity.z * newgame.TILE_THICKNESS + (this.view.core.mapData.height - 1) * newgame.TILE_THICKNESS
+		this.x = (this.entity.x * newgame.TILE_WIDTH) | 0;
+		this.y = (this.entity.y * (newgame.TILE_HEIGHT - newgame.TILE_OFFSET - newgame.TILE_THICKNESS) -
+				this.entity.z * newgame.TILE_THICKNESS + (this.view.core.mapData.height - 1) * newgame.TILE_THICKNESS) | 0;
 	};
 
 	EntityView.prototype.draw = function () {
