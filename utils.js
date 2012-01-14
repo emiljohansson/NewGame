@@ -4,12 +4,6 @@
 
 	newgame.utils = utils;
 
-    utils.mixin = function (constructor, mixin) {
-        for (var property in mixin) {
-            constructor.prototype[property] = mixin[property];
-        }
-    };
-
     utils.Deferred = (function () {
 
         var Deferred = function () {
@@ -111,5 +105,66 @@
         return Deferred;
 
     })();
+
+    utils.mixin = function (constructor, mixin) {
+        for (var property in mixin) {
+            constructor.prototype[property] = mixin[property];
+        }
+    };
+
+    utils.ObservableMixin = {
+
+        addEventHandler: function (type, handler, scope) {
+
+            var handlers = this._Observable_handlers = this._Observable_handlers || {};
+
+            handlers[type] = handlers[type] || [];
+
+            handlers[type].push({
+                fn: handler,
+                scope: scope || this
+            });
+
+        },
+
+        removeEventHandler: function (type, handler, scope) {
+
+            scope = scope || this;
+
+            var handlers = this._Observable_handlers;
+
+            if (handlers && handlers[type]) {
+
+                handlers[type] = handlers[type].filter(function (h) {
+                    return (h.fn !== handler) || (h.scope !== scope);
+                });
+
+            }
+
+        },
+
+        fireEvent: function (type, data) {
+
+            data = data || {};
+            data.target = data.target || this;
+
+            var stopPropagation = false;
+
+            var handlers = this._Observable_handlers;
+            if (handlers && handlers[type]) {
+                handlers[type].forEach(function (handler) {
+                    if (handler.fn.call(handler.scope, data) === false) {
+                        stopPropagation = true;
+                    }
+                });
+            }
+
+            if (this.eventsBubbleTarget && !stopPropagation) {
+                this.eventsBubbleTarget.fireEvent(type, data);
+            }
+
+        }
+
+    };
 
 })();
