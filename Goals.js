@@ -12,7 +12,9 @@
 		this.score = 0;
 		newgame.subscribe("die", function () {
 			if (++this.score === this.core.enemies.length) {
-				alert("Congratulations, You Won!")
+				setTimeout(function () {
+					alert("Congratulations, You Won!")
+				}, 1000);
 			}
 		}, this);
 	};
