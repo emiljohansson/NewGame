@@ -7,11 +7,14 @@
 
 		this.entityTypes = config.entityTypes;
 		this.mapData = config.map;
+
 		this.entitiesList = [];
 		this.ladyBug = null;
 		this.enemies = [];
 
 		this.world = this.initPhysics();
+
+		this.inputs = {};
 
 		this.mapData.entities.forEach(function (entityConfig) {
 
@@ -58,6 +61,10 @@
 
 		return world;
 
+	};
+
+	newgame.Core.prototype.input = function (action, isOn) {
+		this.inputs[action] = isOn;
 	};
 
 })();

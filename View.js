@@ -24,6 +24,8 @@
 			this.renderingPath = [];
 			this.updateRenderingPath(true);
 
+			this.attachKeyboardHandlers();
+
 		};
 
 	View.prototype.createCanvas = function () {
@@ -87,4 +89,56 @@
 	    })();
 
 	};
+
+	View.prototype.attachKeyboardHandlers = function () {
+
+		var that = this;
+
+		var handler = function (event) {
+
+				var action, isOn;
+
+				switch (event.type) {
+					case "keydown":
+						isOn = true;
+						break;
+					case "keyup":
+						isOn = false;
+						break;
+				}
+
+				switch (event.keyCode) {
+					case 37: // arrow left
+					case 65: // A
+						action = newgame.InputTypes.LEFT;
+						break;
+					case 38: // arrow up
+					case 87: // W
+						action = newgame.InputTypes.UP;
+						break;
+					case 39: // arrow right
+					case 68: // D
+						action = newgame.InputTypes.RIGHT;
+						break;
+					case 40: // arrow down
+					case 83: // S
+						action = newgame.InputTypes.DOWN;
+						break;
+					case 32: // spacebar
+						action = newgame.InputTypes.JUMP;
+						break;
+				}
+
+				if (action) {
+					event.preventDefault();
+					that.core.input(action, isOn);
+				}
+
+			};
+
+		document.addEventListener("keydown", handler, false);
+		document.addEventListener("keyup", handler, false);
+
+	};
+
 })();

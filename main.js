@@ -1,12 +1,20 @@
 var newgame = {};
 
 newgame.MAP_URL = "map.json";
-
 newgame.SPRITE_MAP_URL = "sprite.json";
+
 newgame.TILE_WIDTH = 101;
 newgame.TILE_HEIGHT = 171;
 newgame.TILE_THICKNESS = 40;
 newgame.TILE_OFFSET = 50;
+
+newgame.InputTypes = {
+	LEFT: "left",
+	UP: "up",
+	RIGHT: "right",
+	DOWN: "down",
+	JUMP: "jump"
+};
 
 window.addEventListener("load", function () {
 
