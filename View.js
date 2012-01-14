@@ -43,12 +43,12 @@
 		}
 
 		this.renderingPath.sort(function (entityViewA, entityViewB) {
-			if (entityViewA.entity.z < entityViewB.entity.z) {
+			if (entityViewA.entity.body.z < entityViewB.entity.body.z) {
 				return -1;
-			} else if (entityViewA.entity.z > entityViewB.entity.z) {
+			} else if (entityViewA.entity.body.z > entityViewB.entity.body.z) {
 				return 1;
 			} else {
-				return entityViewA.entity.y - entityViewB.entity.y;
+				return entityViewA.entity.body.y - entityViewB.entity.body.y;
 			}
 		});
 

@@ -61,6 +61,7 @@ window.addEventListener("load", function () {
 				core: core
 			});
 
+		core.initPhysics();
 		view.play();
 
 	});

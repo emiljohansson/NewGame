@@ -7,9 +7,10 @@
 		};
 
 	EntityView.prototype.update = function () {
-		this.x = (this.entity.x * newgame.TILE_WIDTH) | 0;
-		this.y = (this.entity.y * (newgame.TILE_HEIGHT - newgame.TILE_OFFSET - newgame.TILE_THICKNESS) -
-				this.entity.z * newgame.TILE_THICKNESS + (this.view.core.mapData.height - 1) * newgame.TILE_THICKNESS) | 0;
+		var body = this.entity.body;
+		this.x = (body.x * newgame.TILE_WIDTH) | 0;
+		this.y = (body.y * (newgame.TILE_HEIGHT - newgame.TILE_OFFSET - newgame.TILE_THICKNESS) -
+				body.z * newgame.TILE_THICKNESS + (this.view.core.mapData.height - 1) * newgame.TILE_THICKNESS) | 0;
 	};
 
 	EntityView.prototype.draw = function () {
