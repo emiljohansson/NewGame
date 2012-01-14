@@ -6,9 +6,13 @@
 				this.type = config.uri;
 				this.id = Math.random();
 
+				this.eventsBubbleTarget = core;
+
 				this.body = this.initPhysics(config);
 			}
 		};
+
+	newgame.utils.mixin(Entity, newgame.utils.ObservableMixin);
 
 	Entity.prototype.initPhysics = function (config) {
 

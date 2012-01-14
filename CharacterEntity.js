@@ -1,7 +1,5 @@
 (function () {
 
-    var DIE_TIMEOUT = 500;
-
     var Entity = newgame.CharacterEntity = function (core, config) {
             newgame.Entity.call(this, core, config);
 
@@ -9,6 +7,8 @@
                 this.initAI();
             }
         };
+
+    Entity.DIE_TIMEOUT = 1500;
 
     Entity.prototype = new newgame.Entity;
     Entity.prototype.constructor = Entity;
@@ -47,8 +47,10 @@
             var that = this;
             setTimeout(function () {
                 that.body.remove();
-            }, DIE_TIMEOUT);
-            this.isDying = true;
+                that.fireEvent("die");
+            }, Entity.DIE_TIMEOUT);
+            this.isDying = Date.now();
+            that.fireEvent("dying");
         }
     };
 

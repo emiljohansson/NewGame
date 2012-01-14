@@ -41,7 +41,11 @@
 
 		}, this);
 
+		this.addEventHandler("die", this.deathHandler, this);
+
 	};
+
+	newgame.utils.mixin(newgame.Core, newgame.utils.ObservableMixin);
 
 	newgame.Core.prototype.initPhysics = function () {
 
@@ -65,6 +69,10 @@
 
 	newgame.Core.prototype.input = function (action, isOn) {
 		this.inputs[action] = isOn;
+	};
+
+	newgame.Core.prototype.deathHandler = function (eventData) {
+		this.entitiesList.splice(this.entitiesList.indexOf(eventData.target), 1);
 	};
 
 })();

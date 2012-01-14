@@ -1,8 +1,8 @@
 (function () {
 
-	var View = newgame.View = function (config) {
+	var View = newgame.View = function (core, config) {
 
-			this.core = config.core;
+			this.core = core;
 
 			this.createCanvas();
 
@@ -25,6 +25,8 @@
 			this.updateRenderingPath(true);
 
 			this.attachKeyboardHandlers();
+
+			core.addEventHandler("die", this.deathHandler, this);
 
 		};
 
@@ -139,6 +141,10 @@
 		document.addEventListener("keydown", handler, false);
 		document.addEventListener("keyup", handler, false);
 
+	};
+
+	View.prototype.deathHandler = function (eventData) {
+		this.renderingPath.splice(this.renderingPath.indexOf(this.entityViews[eventData.target.id]), 1);
 	};
 
 })();

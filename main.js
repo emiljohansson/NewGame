@@ -65,9 +65,7 @@ window.addEventListener("load", function () {
 				entityTypes: spriteMapDeferred.result[0]
 			});
 
-		var view = new newgame.View({
-				core: core
-			});
+		var view = new newgame.View(core, {});
 
 		core.initPhysics();
 		view.play();
