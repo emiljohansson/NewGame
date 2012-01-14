@@ -54,4 +54,6 @@
 
     };
 
+    Entity.prototype.initAI = function () {}; // empty fn will disable AI // TODO: make a mixin/plugin?
+
 })();

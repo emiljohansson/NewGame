@@ -4,6 +4,10 @@
 
     var Entity = newgame.CharacterEntity = function (core, config) {
             newgame.Entity.call(this, core, config);
+
+            if (core && config) {
+                this.initAI();
+            }
         };
 
     Entity.prototype = new newgame.Entity;
@@ -46,6 +50,14 @@
             }, DIE_TIMEOUT);
             this.isDying = true;
         }
+    };
+
+    Entity.prototype.initAI = function () {
+        // just an AI stub for now...
+        var that = this;
+        setInterval(function () {
+            that.body.accelerate(Math.random() * 200 - 100, Math.random() * 200 - 100, 0);
+        }, 750);
     };
 
 })();
