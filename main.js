@@ -16,6 +16,63 @@ newgame.InputTypes = {
 	JUMP: "jump"
 };
 
+newgame.subscribe = function (channel, subscriber, scope) {
+
+    if (typeof this._PubSubBroker_subscribers === "undefined") {
+        this._PubSubBroker_subscribers = {};
+    }
+
+    var subscribers = this._PubSubBroker_subscribers;
+
+    if (typeof subscribers[channel] === "undefined") {
+        subscribers[channel] = [];
+    }
+
+    subscribers[channel].push({
+        fn: subscriber,
+        scope: scope || this
+    });
+
+};
+
+newgame.publish = function (channel, message) {
+
+    var subscribers = this._PubSubBroker_subscribers;
+    message && (message._channel = channel);
+
+    if (typeof subscribers !== "undefined") {
+
+        var channels = Object.keys(subscribers).filter(function (key) {
+                if (key[key.length - 1] === "/") {
+                    return channel.indexOf(key) === 0;
+                } else {
+                    return channel === key;
+                }
+            });
+
+        channels.forEach(function (channel) {
+            subscribers[channel].forEach(function (subscriber) {
+                subscriber.fn.call(subscriber.scope, message);
+            });
+        });
+
+    }
+
+};
+
+newgame.unsubscribe = function (channel, subscriber, scope) {
+
+    var subscribers = this._PubSubBroker_subscribers;
+
+    if (typeof subscribers[channel] !== "undefined") {
+        scope = scope || this;
+        subscribers[channel] = subscribers[channel].filter(function (sub) {
+            return !(sub.fn === subscriber && scope === sub.scope);
+        });
+    }
+
+};
+
 window.addEventListener("load", function () {
 
 	// Get map
