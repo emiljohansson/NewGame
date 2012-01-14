@@ -51,7 +51,7 @@ window.addEventListener("load", function () {
 		imagesDeferred,
 		spriteMapDeferred
 	]).addCallback(function () {
-		
+
 		var core = new newgame.Core({
 				map: mapDeferred.result[0],
 				entityTypes: spriteMapDeferred.result[0]
@@ -61,7 +61,7 @@ window.addEventListener("load", function () {
 				core: core
 			});
 
-		view.draw();
+		view.play();
 
 	});
 

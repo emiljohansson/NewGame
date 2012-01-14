@@ -1,5 +1,5 @@
 (function () {
-	
+
 	var View = newgame.View = function (config) {
 
 			this.core = config.core;
@@ -56,4 +56,20 @@
 		})
 	};
 
+	View.prototype.play = function () {
+
+		var requestAnimationFrame = window.requestAnimationFrame ||
+				window.webkitRequestAnimationFrame ||
+				window.mozRequestAnimationFrame ||
+				window.oRequestAnimationFrame ||
+				window.msRequestAnimationFrame;
+
+		var that = this;
+
+	    (function loop () {
+		    requestAnimationFrame(loop);
+		    that.draw();
+	    })();
+
+	};
 })();
