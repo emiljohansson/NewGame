@@ -1,48 +1,55 @@
-var newgame = {};
+/*jslint browser: true, nomen: true, vars: true */
+/*global newgame, vphy */
 
-newgame.MAP_URL = "map.json";
-newgame.SPRITE_MAP_URL = "sprite.json";
+(function () {
 
-newgame.TILE_WIDTH = 101;
-newgame.TILE_HEIGHT = 171;
-newgame.TILE_THICKNESS = 40;
-newgame.TILE_OFFSET = 50;
+    'use strict';
 
-newgame.InputTypes = {
-	LEFT: "left",
-	UP: "up",
-	RIGHT: "right",
-	DOWN: "down",
-	JUMP: "jump"
-};
+    window.newgame = {};
 
-newgame.subscribe = function (channel, subscriber, scope) {
+    newgame.MAP_URL = "map.json";
+    newgame.SPRITE_MAP_URL = "sprite.json";
 
-    if (typeof this._PubSubBroker_subscribers === "undefined") {
-        this._PubSubBroker_subscribers = {};
-    }
+    newgame.TILE_WIDTH = 101;
+    newgame.TILE_HEIGHT = 171;
+    newgame.TILE_THICKNESS = 40;
+    newgame.TILE_OFFSET = 50;
 
-    var subscribers = this._PubSubBroker_subscribers;
+    newgame.InputTypes = {
+        LEFT: "left",
+        UP: "up",
+        RIGHT: "right",
+        DOWN: "down",
+        JUMP: "jump"
+    };
 
-    if (typeof subscribers[channel] === "undefined") {
-        subscribers[channel] = [];
-    }
+    newgame.subscribe = function (channel, subscriber, scope) {
 
-    subscribers[channel].push({
-        fn: subscriber,
-        scope: scope || this
-    });
+        if (typeof this._PubSubBroker_subscribers === "undefined") {
+            this._PubSubBroker_subscribers = {};
+        }
 
-};
+        var subscribers = this._PubSubBroker_subscribers;
 
-newgame.publish = function (channel, message) {
+        if (typeof subscribers[channel] === "undefined") {
+            subscribers[channel] = [];
+        }
 
-    var subscribers = this._PubSubBroker_subscribers;
-    message && (message._channel = channel);
+        subscribers[channel].push({
+            fn: subscriber,
+            scope: scope || this
+        });
 
-    if (typeof subscribers !== "undefined") {
+    };
 
-        var channels = Object.keys(subscribers).filter(function (key) {
+    newgame.publish = function (channel, message) {
+
+        var subscribers = this._PubSubBroker_subscribers,
+            channels;
+
+        if (typeof subscribers !== "undefined") {
+
+            channels = Object.keys(subscribers).filter(function (key) {
                 if (key[key.length - 1] === "/") {
                     return channel.indexOf(key) === 0;
                 } else {
@@ -50,91 +57,94 @@ newgame.publish = function (channel, message) {
                 }
             });
 
-        channels.forEach(function (channel) {
-            subscribers[channel].forEach(function (subscriber) {
-                subscriber.fn.call(subscriber.scope, message);
+            channels.forEach(function (channel) {
+                subscribers[channel].forEach(function (subscriber) {
+                    subscriber.fn.call(subscriber.scope, message);
+                });
             });
+
+        }
+
+    };
+
+    newgame.unsubscribe = function (channel, subscriber, scope) {
+
+        var subscribers = this._PubSubBroker_subscribers;
+
+        if (typeof subscribers[channel] !== "undefined") {
+            scope = scope || this;
+            subscribers[channel] = subscribers[channel].filter(function (sub) {
+                return !(sub.fn === subscriber && scope === sub.scope);
+            });
+        }
+
+    };
+
+    window.addEventListener("load", function () {
+
+        // Get map
+
+        var mapDeferred = newgame.net.getJSON(newgame.MAP_URL);
+
+        // Get sprite map
+
+        var spriteMapDeferred = newgame.net.getJSON(newgame.SPRITE_MAP_URL);
+
+        // Load sprites
+
+        var imagesDeferred = new newgame.utils.Deferred();
+
+        spriteMapDeferred.addCallback(function (spriteMap) {
+
+            var objectsURIs = Object.keys(spriteMap),
+                loadedObjectsNumber = 0;
+
+            objectsURIs.forEach(function (uri) {
+
+                spriteMap[uri].image = new Image();
+                spriteMap[uri].image.addEventListener("load", function () {
+                    loadedObjectsNumber += 1;
+                    if (loadedObjectsNumber === objectsURIs.length) {
+                        imagesDeferred.callback();
+                    }
+                }, false);
+                spriteMap[uri].image.addEventListener("error", function () {
+                    imagesDeferred.errback();
+                }, false);
+                spriteMap[uri].image.setAttribute("src", spriteMap[uri].url);
+
+            });
+
         });
 
-    }
+        // When all is ready, init the game
 
-};
+        newgame.utils.Deferred.gatherResults([
+            mapDeferred,
+            imagesDeferred,
+            spriteMapDeferred
+        ]).addCallback(function () {
 
-newgame.unsubscribe = function (channel, subscriber, scope) {
+            var core = new newgame.Core({
+                    map: mapDeferred.result[0],
+                    entityTypes: spriteMapDeferred.result[0]
+                });
 
-    var subscribers = this._PubSubBroker_subscribers;
+            var view = new newgame.View(core, {});
 
-    if (typeof subscribers[channel] !== "undefined") {
-        scope = scope || this;
-        subscribers[channel] = subscribers[channel].filter(function (sub) {
-            return !(sub.fn === subscriber && scope === sub.scope);
+            core.initPhysics();
+            view.play();
+
+            var hud = new newgame.HUD({
+                    canvas: view.canvas
+                });
+
+            var goals = new newgame.Goals(core);
+
+            var soundManager = new newgame.SoundManager();
+
         });
-    }
 
-};
+    }, false);
 
-window.addEventListener("load", function () {
-
-	// Get map
-
-	var mapDeferred = newgame.net.getJSON(newgame.MAP_URL);
-
-	// Get sprite map
-
-	var spriteMapDeferred = newgame.net.getJSON(newgame.SPRITE_MAP_URL);
-
-	// Load sprites
-
-	var imagesDeferred = new newgame.utils.Deferred();
-
-	spriteMapDeferred.addCallback(function (spriteMap) {
-
-		var objectsURIs = Object.keys(spriteMap);
-		var loadedObjectsNumber = 0;
-
-		objectsURIs.forEach(function (uri) {
-
-			spriteMap[uri].image = new Image();
-			spriteMap[uri].image.addEventListener("load", function () {
-				if (++loadedObjectsNumber === objectsURIs.length) {
-					imagesDeferred.callback();
-				}
-			}, false);
-			spriteMap[uri].image.addEventListener("error", function () {
-				imagesDeferred.errback();
-			}, false);
-			spriteMap[uri].image.setAttribute("src", spriteMap[uri].url);
-
-		});
-
-	});
-
-	// When all is ready, init the game
-
-	newgame.utils.Deferred.gatherResults([
-		mapDeferred,
-		imagesDeferred,
-		spriteMapDeferred
-	]).addCallback(function () {
-
-		var core = new newgame.Core({
-				map: mapDeferred.result[0],
-				entityTypes: spriteMapDeferred.result[0]
-			});
-
-		var view = new newgame.View(core, {});
-
-		core.initPhysics();
-		view.play();
-
-		var hud = new newgame.HUD({
-				canvas: view.canvas
-			});
-
-		var goals = new newgame.Goals(core);
-
-		var soundManager = new newgame.SoundManager();
-
-	});
-
-}, false);
+}());

@@ -1,78 +1,82 @@
+/*global newgame, vphy */
+
 (function () {
 
-	var PHYSICS_PRECISION = 1 / 180;
-	var PHYSICS_UPDATE_INTERVAL = 30;
+    'use strict';
 
-	newgame.Core = function (config) {
+    var PHYSICS_PRECISION = 1 / 180,
+        PHYSICS_UPDATE_INTERVAL = 30;
 
-		this.entityTypes = config.entityTypes;
-		this.mapData = config.map;
+    newgame.Core = function (config) {
 
-		this.entitiesList = [];
-		this.ladybug = null;
-		this.enemies = [];
+        this.entityTypes = config.entityTypes;
+        this.mapData = config.map;
 
-		this.world = this.initPhysics();
+        this.entitiesList = [];
+        this.ladybug = null;
+        this.enemies = [];
 
-		this.inputs = {};
+        this.world = this.initPhysics();
 
-		this.mapData.entities.forEach(function (entityConfig) {
+        this.inputs = {};
 
-			var entity;
+        this.mapData.entities.forEach(function (entityConfig) {
 
-			switch (entityConfig.uri) {
-				case "EnemyBug":
-					entity = new newgame.LadybugCharacterEntity(this, entityConfig);
-					this.ladybug = entity;
-					break;
-				case "CharacterBoy":
-				case "CharacterCatGirl":
-				case "CharacterHornGirl":
-				case "CharacterPinkGirl":
-				case "CharacterPrincessGirl":
-					entity = new newgame.CharacterEntity(this, entityConfig);
-					this.enemies.push(entity);
-					break;
-				default:
-					entity = new newgame.Entity(this, entityConfig);
-			}
+            var entity;
 
-			this.entitiesList.push(entity);
+            switch (entityConfig.uri) {
+            case "EnemyBug":
+                entity = new newgame.LadybugCharacterEntity(this, entityConfig);
+                this.ladybug = entity;
+                break;
+            case "CharacterBoy":
+            case "CharacterCatGirl":
+            case "CharacterHornGirl":
+            case "CharacterPinkGirl":
+            case "CharacterPrincessGirl":
+                entity = new newgame.CharacterEntity(this, entityConfig);
+                this.enemies.push(entity);
+                break;
+            default:
+                entity = new newgame.Entity(this, entityConfig);
+            }
 
-		}, this);
+            this.entitiesList.push(entity);
 
-		this.addEventHandler("die", this.deathHandler, this);
+        }, this);
 
-	};
+        this.addEventHandler("die", this.deathHandler, this);
 
-	newgame.utils.mixin(newgame.Core, newgame.utils.ObservableMixin);
+    };
 
-	newgame.Core.prototype.initPhysics = function () {
+    newgame.utils.mixin(newgame.Core, newgame.utils.ObservableMixin);
 
-		var world = new vphy.World();
+    newgame.Core.prototype.initPhysics = function () {
 
-		world.start(Date.now() / 1000);
+        var world = new vphy.World();
 
-		world.add(new vphy.LinearAccelerator({
-		    x: 0,
-		    y: 0,
-		    z: -9.8
-		}));
+        world.start(Date.now() / 1000);
 
-		setInterval(function () {
-			world.step(PHYSICS_PRECISION, Date.now() / 1000);
-		}, PHYSICS_UPDATE_INTERVAL);
+        world.add(new vphy.LinearAccelerator({
+            x: 0,
+            y: 0,
+            z: -9.8
+        }));
 
-		return world;
+        setInterval(function () {
+            world.step(PHYSICS_PRECISION, Date.now() / 1000);
+        }, PHYSICS_UPDATE_INTERVAL);
 
-	};
+        return world;
 
-	newgame.Core.prototype.input = function (action, isOn) {
-		this.inputs[action] = isOn;
-	};
+    };
 
-	newgame.Core.prototype.deathHandler = function (eventData) {
-		this.entitiesList.splice(this.entitiesList.indexOf(eventData.target), 1);
-	};
+    newgame.Core.prototype.input = function (action, isOn) {
+        this.inputs[action] = isOn;
+    };
 
-})();
+    newgame.Core.prototype.deathHandler = function (eventData) {
+        this.entitiesList.splice(this.entitiesList.indexOf(eventData.target), 1);
+    };
+
+}());

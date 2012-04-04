@@ -1,4 +1,8 @@
+/*global newgame, vphy */
+
 (function () {
+
+    'use strict';
 
     var Entity = newgame.CharacterEntity = function (core, config) {
             newgame.Entity.call(this, core, config);
@@ -10,7 +14,7 @@
 
     Entity.DIE_TIMEOUT = 1500;
 
-    Entity.prototype = new newgame.Entity;
+    Entity.prototype = new newgame.Entity();
     Entity.prototype.constructor = Entity;
 
     Entity.prototype.initPhysics = function (config) {
@@ -47,12 +51,12 @@
             var that = this;
             setTimeout(function () {
                 that.body.remove();
-                that.fireEvent("die");
-                newgame.publish("die");
+                that.fireEvent('die');
+                newgame.publish('die');
             }, Entity.DIE_TIMEOUT);
             this.isDying = Date.now();
-            that.fireEvent("dying");
-            newgame.publish("dying");
+            that.fireEvent('dying');
+            newgame.publish('dying');
         }
     };
 
@@ -60,8 +64,9 @@
         // just an AI stub for now...
         var that = this;
         setInterval(function () {
-            that.body.accelerate(Math.random() * 200 - 100, Math.random() * 200 - 100, 0);
+            that.body.accelerate(Math.random() * 200 - 100,
+                    Math.random() * 200 - 100, 0);
         }, 750);
     };
 
-})();
+}());

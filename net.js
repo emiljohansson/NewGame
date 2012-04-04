@@ -1,34 +1,43 @@
-newgame.net = {};
+/*jslint browser: true */
+/*global newgame, vphy */
 
-newgame.net.get = function (url) {
+(function () {
 
-	var deferred = new newgame.utils.Deferred();
+    'use strict';
 
-	var xhr = new XMLHttpRequest();
+    newgame.net = {};
 
-	xhr.onreadystatechange = function () {
-		if (xhr.readyState === 4) {
-			if (xhr.status < 400) {
-				deferred.callback(xhr.responseText);
-			}
-		}
-	};
+    newgame.net.get = function (url) {
 
-	xhr.open("GET", url);
-	xhr.send();
+        var deferred = new newgame.utils.Deferred(),
 
-	return deferred;
+            xhr = new XMLHttpRequest();
 
-};
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status < 400) {
+                    deferred.callback(xhr.responseText);
+                }
+            }
+        };
 
-newgame.net.getJSON = function (url) {
+        xhr.open("GET", url);
+        xhr.send();
 
-	var deferred = new newgame.utils.Deferred();
+        return deferred;
 
-	newgame.net.get(url).addCallback(function (responseText) {
-		deferred.callback(JSON.parse(responseText));
-	});
+    };
 
-	return deferred;
+    newgame.net.getJSON = function (url) {
 
-};
+        var deferred = new newgame.utils.Deferred();
+
+        newgame.net.get(url).addCallback(function (responseText) {
+            deferred.callback(JSON.parse(responseText));
+        });
+
+        return deferred;
+
+    };
+
+}());

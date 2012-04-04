@@ -1,8 +1,13 @@
+/*jslint nomen: true */
+/*global newgame, vphy */
+
 (function () {
 
-	var utils = {};
+    'use strict';
 
-	newgame.utils = utils;
+    var utils = {};
+
+    newgame.utils = utils;
 
     utils.Deferred = (function () {
 
@@ -80,35 +85,40 @@
 
         Deferred.gatherResults = function (deferreds) {
 
-        	var deferredResult = new Deferred();
+            var deferredResult = new Deferred(),
 
-        	var callbacksNumber = 0;
-        	var errbacksNumber = 0;
-        	
-        	deferreds.forEach(function (deferred) {
-        		deferred.addCallback(function () {
-        			if (++callbacksNumber + errbacksNumber === deferreds.length) {
-        				deferredResult.callback();
-        			}
-        		});
-        		deferred.addErrback(function () {
-        			if (++errbacksNumber + callbacksNumber === deferreds.length) {
-        				deferredResult.callback();
-        			}
-        		});
-        	});
+                callbacksNumber = 0,
+                errbacksNumber = 0;
 
-	        return deferredResult;
+            deferreds.forEach(function (deferred) {
+                deferred.addCallback(function () {
+                    callbacksNumber += 1;
+                    if (callbacksNumber + errbacksNumber === deferreds.length) {
+                        deferredResult.callback();
+                    }
+                });
+                deferred.addErrback(function () {
+                    errbacksNumber += 1;
+                    if (errbacksNumber + callbacksNumber === deferreds.length) {
+                        deferredResult.callback();
+                    }
+                });
+            });
+
+            return deferredResult;
 
         };
 
         return Deferred;
 
-    })();
+    }());
 
     utils.mixin = function (constructor, mixin) {
-        for (var property in mixin) {
-            constructor.prototype[property] = mixin[property];
+        var property;
+        for (property in mixin) {
+            if (mixin.hasOwnProperty(property)) {
+                constructor.prototype[property] = mixin[property];
+            }
         }
     };
 
@@ -148,9 +158,9 @@
             data = data || {};
             data.target = data.target || this;
 
-            var stopPropagation = false;
+            var stopPropagation = false,
+                handlers = this._Observable_handlers;
 
-            var handlers = this._Observable_handlers;
             if (handlers && handlers[type]) {
                 handlers[type].forEach(function (handler) {
                     if (handler.fn.call(handler.scope, data) === false) {
@@ -167,4 +177,4 @@
 
     };
 
-})();
+}());

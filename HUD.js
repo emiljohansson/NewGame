@@ -1,31 +1,36 @@
+/*jslint browser: true */
+/*global newgame, vphy */
+
 (function () {
 
-	var HUD = newgame.HUD = function (config) {
+    'use strict';
 
-			this.canvas = config.canvas;
+    var HUD = newgame.HUD = function (config) {
 
-			this.score = 0;
+            this.canvas = config.canvas;
 
-			this.buildUI();
-			this.renderScore();
+            this.score = 0;
 
-			newgame.subscribe("die", function () {
-				this.score++;
-				this.renderScore();
-			}, this);
+            this.buildUI();
+            this.renderScore();
 
-		};
+            newgame.subscribe("die", function () {
+                this.score += 1;
+                this.renderScore();
+            }, this);
 
-	HUD.prototype.buildUI = function () {
-		var div = document.createElement("div");
-		div.className = "hud";
-		div.style.width = this.canvas.width + "px";
-		document.body.appendChild(div);
-		this.scoreCointainer = div;
-	};
+        };
 
-	HUD.prototype.renderScore = function () {
-		this.scoreCointainer.innerHTML = "Points: " + this.score;
-	};
+    HUD.prototype.buildUI = function () {
+        var div = document.createElement("div");
+        div.className = "hud";
+        div.style.width = this.canvas.width + "px";
+        document.body.appendChild(div);
+        this.scoreCointainer = div;
+    };
 
-})();
+    HUD.prototype.renderScore = function () {
+        this.scoreCointainer.innerHTML = "Points: " + this.score;
+    };
+
+}());
